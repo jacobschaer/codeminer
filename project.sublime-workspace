@@ -1,0 +1,1246 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"occurrene",
+				"occurrence_day_of_week"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "from django.db import transaction\nfrom celery import shared_task\nfrom codeminer_tools.repositories import cvs, git, hg, svn\nfrom main.models.repository import Repository\nfrom main.models.changeset import ChangeSet\nfrom main.models.change import Change\nfrom main.models.file import File\n\ndb_repository = Repository(\n    workspace = '/tmp',\n    name = 'subversion',\n    origin = 'http://svn.apache.org/repos/asf/subversion/trunk/',\n    repository_type = Repository.RepositoryType.svn\n)\n\ndb_repository.save()\nrepository_id = db_repository.pk\n\n\n",
+			"settings":
+			{
+				"buffer_size": 541,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "from main import tasks\ntasks.build_repository_history(5)",
+			"settings":
+			{
+				"buffer_size": 56,
+				"line_ending": "Unix",
+				"name": "from main import tasks"
+			}
+		},
+		{
+			"file": "main/models/changeset.py",
+			"settings":
+			{
+				"buffer_size": 477,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/models/history.py",
+			"settings":
+			{
+				"buffer_size": 161,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/tasks.py",
+			"settings":
+			{
+				"buffer_size": 3524,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/models/__init__.py",
+			"settings":
+			{
+				"buffer_size": 146,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/file.py",
+			"settings":
+			{
+				"buffer_size": 718,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/models/file.py",
+			"settings":
+			{
+				"buffer_size": 393,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/change.py",
+			"settings":
+			{
+				"buffer_size": 3906,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/models/repository.py",
+			"settings":
+			{
+				"buffer_size": 1229,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/svn.py",
+			"settings":
+			{
+				"buffer_size": 6333,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "from django.shortcuts import render\nfrom main.models.repository import Repository, RepositoryForm\nfrom django.http import HttpResponseRedirect\n\ndef index(request):\n    context = {\n        'repositories': [x for x in Repository.objects.all()]\n    }\n    return render(request, 'main/index.html', context)\n\ndef add_repository(request):\n    if request.method == 'POST':\n        # create a form instance and populate it with data from the request:\n        form = RepositoryForm(request.POST)\n        # check whether it's valid:\n        if form.is_valid():\n            # process the data in form.cleaned_data as required\n            # ...\n            # redirect to a new URL:\n            form.save()\n            return HttpResponseRedirect('/')\n    else:\n        form = RepositoryForm()\n    return render(request, 'main/add_repository.html', {'form': form})\n\ndef delete_repository(request, repository_id):\n    item = Repository.objects.get(pk=repository_id)\n    item.delete()\n    return HttpResponseRedirect('/')\n\ndef repository(request, repository_id):\n    repo ",
+			"file": "main/views.py",
+			"file_size": 1042,
+			"file_write_time": 131224424144030551,
+			"settings":
+			{
+				"buffer_size": 1057,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/clients/svn.py",
+			"settings":
+			{
+				"buffer_size": 14455,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/templates/main/add_repository.html",
+			"settings":
+			{
+				"buffer_size": 382,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/jacob/Projects/codeminer",
+		"/home/jacob/Projects/codeminer/codeminer",
+		"/home/jacob/Projects/codeminer/main",
+		"/home/jacob/Projects/codeminer/main/__pycache__",
+		"/home/jacob/Projects/codeminer/main/models",
+		"/home/jacob/Projects/codeminer-tools",
+		"/home/jacob/Projects/codeminer-tools/codeminer_tools",
+		"/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories"
+	],
+	"file_history":
+	[
+		"/home/jacob/Projects/codeminer/main/models/change.py",
+		"/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/change.py",
+		"/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/file.py",
+		"/home/jacob/Projects/codeminer/main/models/changeset.py",
+		"/home/jacob/Projects/codeminer/main/tasks.py",
+		"/home/jacob/Projects/codeminer/main/templates/main/index.html",
+		"/home/jacob/Projects/codeminer/main/urls.py",
+		"/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/repository.py",
+		"/home/jacob/Projects/codeminer/main/models/repository.py",
+		"/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/svn.py",
+		"/home/jacob/Projects/codeminer/main/views.py",
+		"/home/jacob/Projects/codeminer/codeminer/urls.py",
+		"/home/jacob/Projects/codeminer/main/models/__init__.py",
+		"/home/jacob/Projects/codeminer/codeminer/celery.py",
+		"/home/jacob/Projects/codeminer/codeminer/__init__.py",
+		"/home/jacob/Projects/codeminer/codeminer/settings.py",
+		"/home/jacob/Projects/codeminer/main/static/css/main.css",
+		"/home/jacob/Projects/codeminer/main/static/js/ie10-viewport-bug-workaround.js",
+		"/home/jacob/Projects/codeminer/requirements.txt",
+		"/home/jacob/Projects/codeminer/main/static/js/repository.js",
+		"/home/jacob/Projects/codeminer/main/models/configuration.py",
+		"/home/jacob/Projects/codeminer/main/models/configurati\\on.py",
+		"/home/jacob/Projects/rockymountainterrace-com/index.html",
+		"/home/jacob/Projects/OFX/ofx-gui/main.py",
+		"/home/jacob/Projects/OFX/request.xml",
+		"/home/jacob/Projects/OFX/ledger/main.py",
+		"/home/jacob/Projects/OFX/ofx-gui/README.md",
+		"/home/jacob/Projects/OFX/ofx-gui/requirements.txt",
+		"/tmp/mozilla_jacob0/Backup-codes-jacobschaer.txt",
+		"/home/jacob/Projects/OFX/ofx-gui/base.py",
+		"/home/jacob/Projects/OFX/ofx-gui/ofxtransaction.py",
+		"/home/jacob/Projects/OFX/ofx-gui/ledgertransaction.py",
+		"/home/jacob/Projects/OFX/ledger/drag.py",
+		"/home/jacob/Projects/OFX/ledger/ledgertransaction.py",
+		"/home/jacob/Projects/OFX/ledger/alchemical_model.py",
+		"/home/jacob/Downloads/VISA_414_CURRENT_VIEW.OFX",
+		"/home/jacob/Projects/OFX/ledger/ofxtransaction.py",
+		"/home/jacob/Projects/OFX/ledger/qvariantalchemy.py",
+		"/home/jacob/Projects/OFX/ledger/base.py",
+		"/home/jacob/Projects/OFX/ledger/LedgerTransactions.py",
+		"/home/jacob/Projects/OFX/ledger/ofxparse/ofxparse/ofxparse.py",
+		"/home/jacob/Projects/avsim/doc/index.rst",
+		"/home/jacob/Projects/avsim/avsim/avsim.py",
+		"/home/jacob/Projects/avsim/doc/avsim.rst",
+		"/home/jacob/Projects/avsim/doc/1553.rst",
+		"/home/jacob/Projects/avsim/doc/goals.rst",
+		"/home/jacob/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/jacob/Projects/avsim/fabfile.py",
+		"/home/jacob/Projects/avsim/avsim/database/__init__.py",
+		"/home/jacob/Projects/avsim/avsim/database/database.py",
+		"/home/jacob/Projects/avsim/runtest.sh",
+		"/home/jacob/Projects/avsim/avsim/avsim_module.py",
+		"/home/jacob/Projects/OFX/ledger/parse.py",
+		"/home/jacob/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/jacob/Projects/avsim/doc/conf.py",
+		"/home/jacob/Projects/avsim/avsim/database/.gitignore",
+		"/home/jacob/Projects/teamlunch.info/teamlunch/settings.py",
+		"/home/jacob/Projects/avsim/avsim/test/test.py",
+		"/home/jacob/Projects/teamlunch.info/teams/models.py",
+		"/home/jacob/Projects/teamlunch.info/fabfile.py",
+		"/home/jacob/Projects/teamlunch.info/teams/tests.py",
+		"/home/jacob/Projects/avsim/avsim/powersys/__init__.py",
+		"/home/jacob/Projects/avsim/avsim/powersys/powersys.py",
+		"/media/storage/Websites/rockymountainterrace-com/index.html",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/details.html",
+		"/home/jacob/Projects/teamlunch.info/teams/urls.py",
+		"/home/jacob/Projects/teamlunch.info/teams/views.py",
+		"/home/jacob/Projects/teamlunch.info/teams/backends.py",
+		"/home/jacob/Projects/teamlunch.info/teamlunch/urls.py",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/organizations/email/invitation_body.html",
+		"/home/jacob/Projects/teamlunch.info/requirements.txt",
+		"/home/jacob/Projects/teamlunch.info/production_requirements.txt",
+		"/home/jacob/Projects/teamlunch.info/development_requirements.txt",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/team_wizard.html",
+		"/home/jacob/Projects/teamlunch.info/teamlunch/views.py",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/socialaccount/snippets/provider_list.html",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/accept_invitation.html",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/organizations/login.html",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/organizations/register_form.html",
+		"/home/jacob/Projects/teamlunch.info/teams/accept_invitation.html",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/index.html",
+		"/home/jacob/Projects/teamlunch.info/teams/forms.py",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/done.html",
+		"/home/jacob/Projects/teamlunch.info/teams/tasks.py",
+		"/home/jacob/Projects/teamlunch.info/teams/admin.py",
+		"/home/jacob/team_lunch_yelp_keys.json",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teamlunch/index.html",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/choose.html",
+		"/home/jacob/Projects/teamlunch.info/teams/yelp.py",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/view.html",
+		"/home/jacob/Projects/teamlunch.info/static/bootstrap/less/responsive-utilities.less",
+		"/home/jacob/Projects/teamlunch.info/teams/templates/teams/wizard_schedule.html",
+		"/home/jacob/Projects/teamlunch.info/.gitignore",
+		"/home/jacob/Projects/teamlunch.info/supervisord/teamlunch.info.ini.template",
+		"/home/jacob/Projects/teamlunch.info/supervisord/teamlunch.info.ini",
+		"/home/jacob/Projects/teamlunch.info/teamlunch/__init__.py",
+		"/home/jacob/Projects/teamlunch.info/teamlunch/celery.py",
+		"/home/jacob/Projects/teamlunch.info/supervisord/teamlunch.info.conf.template"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"add",
+			"list",
+			"repository = ",
+			"changets",
+			"proj",
+			"repository",
+			"BNSF",
+			"MainWindow",
+			"populate_rows",
+			"MainWindow",
+			"AlchemicalTableModel",
+			"Boolean",
+			"Integer",
+			"String",
+			"relationship",
+			"sessionmaker",
+			"Column",
+			"create_engine",
+			"QtWidgets",
+			"query",
+			"self.query",
+			"self.session",
+			"sort_data",
+			"Ledger",
+			"PyQt4",
+			"QtGui",
+			"\\t",
+			"BANKID",
+			"fid",
+			"institution",
+			"Institution",
+			"institution",
+			"Account",
+			"self.",
+			"self.type",
+			"self.",
+			"...",
+			"\n...",
+			"\n...\n",
+			"...",
+			"OfxFile",
+			"six",
+			">>> ",
+			"\\n",
+			"https",
+			" ",
+			"\\n",
+			"\\t",
+			"timer_jitter",
+			"\t\tself.timer = None\n",
+			"main_thread",
+			"add",
+			"kill_redis_server",
+			"start_redis_server",
+			"redis_server_connection",
+			"run",
+			"owner",
+			".user.email",
+			"User.objects.create_user",
+			"b",
+			"User.objects.create_user('",
+			"User.objects.create_user(",
+			"User.objects.create_user",
+			"self.",
+			"302",
+			"redire",
+			"redirect",
+			"john",
+			"redirect",
+			"print",
+			"reverse",
+			"_send_email",
+			"setting",
+			"is_active",
+			"team()",
+			"delete()",
+			"SimpleTestCase",
+			"user",
+			"create_user_and_login",
+			"create_team",
+			"create_user_and_login",
+			"\\t",
+			"pk",
+			"TeamMember",
+			"\\t",
+			"invitation_backend",
+			"invite_user",
+			"invitation",
+			"get_user_m",
+			"populate_fr",
+			"populate_form",
+			"organization",
+			"OrganizationUser",
+			"OrganizationOwner",
+			"OrganizationUser",
+			"__unicode__",
+			"OrganizationOwnerBase",
+			"Base",
+			"TeamMember",
+			"is_admin",
+			"OrganizationUser",
+			"Organization",
+			"done",
+			"render",
+			"render_to_response",
+			"formset_factory",
+			"BaseFormSet",
+			"YelpForm",
+			"TeamForm4",
+			"TeamForm3",
+			"OrderedDict",
+			"get_current_site",
+			"self.cleaned_data['email']",
+			"TEMPLATES",
+			"TeamMember",
+			"member_set",
+			"DoesNotExist",
+			"teammember_set",
+			"member",
+			"teammember_set",
+			"teammember",
+			"_set",
+			"request.u",
+			"signed_url",
+			"len",
+			"generate_nonce",
+			"search",
+			"query_api"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"changesets",
+			"    ",
+			"",
+			" ",
+			"TestCase",
+			"    ",
+			"self.CONSUMER_KEY",
+			"\""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 541,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								34,
+								34
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 56,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								56,
+								56
+							]
+						],
+						"settings":
+						{
+							"auto_name": "from main import tasks",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "main/models/changeset.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 477,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								91,
+								91
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "main/models/history.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 161,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								161,
+								161
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "main/tasks.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3524,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1259,
+								1259
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 264.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "main/models/__init__.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 146,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								146,
+								146
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/file.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 718,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "main/models/file.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 393,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								392,
+								392
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/change.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3906,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								741,
+								741
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "main/models/repository.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1229,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								584,
+								584
+							],
+							[
+								655,
+								655
+							],
+							[
+								727,
+								727
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/repositories/svn.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6333,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5333,
+								5333
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1751.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "main/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1057,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								942,
+								942
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 44.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/home/jacob/Projects/codeminer-tools/codeminer_tools/clients/svn.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14455,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13644,
+								13644
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8392.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "main/templates/main/add_repository.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 382,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								90,
+								90
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "project.sublime-project",
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"file",
+				"codeminer/main/models/file.py"
+			],
+			[
+				"model__",
+				"codeminer/main/models/__init__.py"
+			],
+			[
+				"change",
+				"codeminer/main/models/change.py"
+			],
+			[
+				"changese",
+				"codeminer/main/models/changeset.py"
+			],
+			[
+				"chang",
+				"codeminer-tools/codeminer_tools/repositories/change.py"
+			],
+			[
+				"mod",
+				"codeminer/main/models/changeset.py"
+			],
+			[
+				"svn",
+				"codeminer-tools/codeminer_tools/repositories/svn.py"
+			],
+			[
+				"changeset",
+				"codeminer/main/models/changeset.py"
+			],
+			[
+				"repo",
+				"codeminer/main/models/repository.py"
+			],
+			[
+				"task",
+				"codeminer/main/tasks.py"
+			],
+			[
+				"add_",
+				"codeminer/main/templates/main/add_repository.html"
+			],
+			[
+				"view",
+				"codeminer/main/views.py"
+			],
+			[
+				"index.",
+				"codeminer/main/templates/main/index.html"
+			],
+			[
+				"change.",
+				"codeminer/main/models/change.py"
+			],
+			[
+				"repos",
+				"codeminer-tools/codeminer_tools/repositories/repository.py"
+			],
+			[
+				"tasks",
+				"codeminer/main/tasks.py"
+			],
+			[
+				"index",
+				"codeminer/main/templates/main/index.html"
+			],
+			[
+				"taks",
+				"codeminer/main/tasks.py"
+			],
+			[
+				"setting",
+				"codeminer/codeminer/settings.py"
+			],
+			[
+				"req",
+				"codeminer/requirements.txt"
+			],
+			[
+				"require",
+				"codeminer/requirements.txt"
+			],
+			[
+				"main.css",
+				"codeminer/main/static/css/main.css"
+			],
+			[
+				"main.js",
+				"codeminer/main/static/js/ie10-viewport-bug-workaround.js"
+			],
+			[
+				"main.u",
+				"codeminer/main/urls.py"
+			],
+			[
+				"url",
+				"codeminer/codeminer/urls.py"
+			],
+			[
+				"inde",
+				"codeminer/main/templates/main/index.html"
+			],
+			[
+				"alchem",
+				"ledger/alchemical_model.py"
+			],
+			[
+				"qtv",
+				"~/Projects/OFX/ledger/qvariantalchemy.py"
+			],
+			[
+				"parse",
+				"~/Projects/OFX/ledger/parse.py"
+			],
+			[
+				"__in",
+				"avsim/database/__init__.py"
+			],
+			[
+				"conf.",
+				"doc/conf.py"
+			],
+			[
+				"data",
+				"avsim/avsim/database/database.py"
+			],
+			[
+				"test",
+				"teams/tests.py"
+			],
+			[
+				"bac",
+				"teams/backends.py"
+			],
+			[
+				"mode",
+				"teams/models.py"
+			],
+			[
+				"views",
+				"teams/views.py"
+			],
+			[
+				"deta",
+				"teams/templates/teams/details.html"
+			],
+			[
+				"ur",
+				"teams/urls.py"
+			],
+			[
+				"invita",
+				"teams/templates/organizations/email/invitation_body.html"
+			],
+			[
+				"backe",
+				"teams/backends.py"
+			],
+			[
+				"sett",
+				"teamlunch/settings.py"
+			],
+			[
+				"deve",
+				"development_requirements.txt"
+			],
+			[
+				"prod",
+				"production_requirements.txt"
+			],
+			[
+				"model",
+				"teams/models.py"
+			],
+			[
+				"set",
+				"teamlunch/settings.py"
+			],
+			[
+				"back",
+				"teams/backends.py"
+			],
+			[
+				"fab",
+				"fabfile.py"
+			],
+			[
+				"mo",
+				"teams/models.py"
+			],
+			[
+				"wizar",
+				"teams/templates/teams/team_wizard.html"
+			],
+			[
+				"urls",
+				"teams/urls.py"
+			],
+			[
+				"snippi",
+				"teams/templates/socialaccount/snippets/provider_list.html"
+			],
+			[
+				"log",
+				"teams/templates/organizations/login.html"
+			],
+			[
+				"login",
+				"teams/templates/organizations/login.html"
+			],
+			[
+				"form",
+				"teams/forms.py"
+			],
+			[
+				"tests",
+				"teams/tests.py"
+			],
+			[
+				"done",
+				"teams/templates/teams/done.html"
+			],
+			[
+				"detail",
+				"teams/templates/teams/details.html"
+			],
+			[
+				"admin",
+				"teams/admin.py"
+			],
+			[
+				"a",
+				"teams/admin.py"
+			],
+			[
+				"choo",
+				"teams/templates/teams/choose.html"
+			],
+			[
+				"forms",
+				"teams/forms.py"
+			],
+			[
+				"settii",
+				"static/bootstrap/less/responsive-utilities.less"
+			],
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"ini",
+				"supervisord/teamlunch.info.ini"
+			],
+			[
+				"celer",
+				"teamlunch/celery.py"
+			],
+			[
+				"settin",
+				"teamlunch/settings.py"
+			],
+			[
+				"template",
+				"supervisord/teamlunch.info.conf.template"
+			],
+			[
+				"giti",
+				".gitignore"
+			],
+			[
+				"__ini",
+				"teamlunch/__init__.py"
+			],
+			[
+				"wizard",
+				"teams/templates/teams/wizard_schedule.html"
+			],
+			[
+				"done.",
+				"teams/templates/teams/done.html"
+			],
+			[
+				"wizard_sch",
+				"teams/templates/teams/wizard_schedule.html"
+			],
+			[
+				"models",
+				"teams/models.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 280.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
