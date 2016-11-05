@@ -42,21 +42,22 @@ def scrape_repository(repository_id):
                     current_file = None,
                     action = change.action.value
                 )
-                db_change.save()
-                db_previous_file = File(
-                    repository = db_repository,
-                    path = change.previous_file.path,
-                    revision = change.previous_file.revision,
-                )
-                db_current_file = File(
-                    repository = db_repository,
-                    path = change.current_file.path,
-                    revision = change.current_file.revision,
-                )
-                db_current_file.save()
-                db_previous_file.save()
-                db_change.previous_file = db_previous_file
-                db_change.current_file = db_current_file
+                if change.previous_file.path != None:
+                    db_previous_file = File(
+                        repository = db_repository,
+                        path = change.previous_file.path,
+                        revision = change.previous_file.revision,
+                    )
+                    db_previous_file.save()
+                    db_change.previous_file = db_previous_file
+                if change.current_file.path != None:                
+                    db_current_file = File(
+                        repository = db_repository,
+                        path = change.current_file.path,
+                        revision = change.current_file.revision,
+                    )
+                    db_current_file.save()
+                    db_change.current_file = db_current_file
                 db_change.save()
 
 @shared_task
@@ -64,32 +65,40 @@ def build_repository_history(repository_id):
     adds = Change.objects.filter(action=ChangeType.add.value, changeset__repository_id = repository_id)
 
     for add in adds:
-        build_change_history(add.pk)
+        history = History()
+        build_change_history.apply_async(args=[add.pk, history])
 
 @shared_task
-def build_change_history(change_id, history=None):
-    next_change = None
+def build_change_history(change_id, history):
+    change = Change.objects.prefetch_related(
+        'current_file', 'previous_file').get(pk=change_id)
+
+    changes = [change]
+    while change:
+        if change.action == ChangeType.remove.value:
+            break
+        else:
+            results = Change.objects.filter(
+                previous_file__revision__gt=change.current_file.revision,
+                previous_file__path=change.current_file.path).prefetch_related(
+                    'previous_file', 'current_file').order_by(
+                        'previous_file__revision')
+            if results:
+                print_me = True
+                changes += [x for x in results]
+                change = changes[-1]
+            else:
+                break
 
     with transaction.atomic():
-        change = Change.objects.prefetch_related(
-            'changeset__repository', 'current_file', 'current_file').get(pk=change_id)
-        if history is None:
-            history = History(repository=change.changeset.repository)
-            history.save()
-            change.history = history
+        history.save()
+        for x in changes:
+            x.history = history
+            x.save()
 
-        if change.action != ChangeType.remove:
-            try:
-                next_change = Change.objects.filter(previous_file__revision__gt=change.current_file.revision,
-                                                    previous_file__path=change.current_file.path).order_by('previous_file__revision').first()
-            except ValueError:
-                print("Something is wrong with a commit")
-        # Fix file revisions as necessary
-        # ..
-        # ..
-
-    if next_change is not None:
-        print("Mapping: {p1}@{r1} to {p2}@{r2}".format(
-            p1=change.current_file.path if change.current_file else None, r1=change.current_file.revision if change.current_file else None,
-            p2=next_change.previous_file.path if next_change.previous_file else None, r2=next_change.previous_file.revision if next_change.previous_file else None))
-        build_change_history(next_change.pk, history=history)
+        # print("\n New File \n")
+        # for x in changes:
+        #     if x.current_file:
+        #         print("++ %s @ %s" % (x.current_file.path, x.current_file.revision))
+        #     else:
+        #         print("++ Deleted")

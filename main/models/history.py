@@ -1,6 +1,6 @@
 from django.db import models
-
+from main.models import Change
 # Create your models here.
 
 class History(models.Model):
-    repository = models.ForeignKey('Repository', on_delete=models.CASCADE)
+    pass

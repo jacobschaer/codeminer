@@ -1,0 +1,25 @@
+{% extends "main/base.html" %}
+{% block content %}
+      <div class="panel panel-default" id="repository_table">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Histories</div>
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Path</th>
+              <th>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for history in histories %}
+            <tr> 
+              <td><a href="/history/{{ history.id }}">{{ history.path }}</a></td>
+              <td>{{ history.state }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+{% endblock %}
