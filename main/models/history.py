@@ -1,6 +1,5 @@
 from django.db import models
-from main.models import Change
 # Create your models here.
 
 class History(models.Model):
-    pass
+    head_file = models.ForeignKey('File', null=True, related_name='+')

@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 from django.apps import apps
 
 import os
@@ -17,9 +16,6 @@ app = Celery('codeminer')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
-app.conf.update(
-    CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
-)   
 
 @app.task(bind=True)
 def debug_task(self):

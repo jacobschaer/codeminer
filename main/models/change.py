@@ -11,6 +11,6 @@ class Change(models.Model):
     history = models.ForeignKey('History', on_delete=models.CASCADE, null=True)
     # A change relates precisely two files - with the special case being the
     # null file (non-existant)
-    previous_file = models.ForeignKey('File', related_name='+', null=True)
+    previous_files = models.ManyToManyField('File')
     current_file = models.ForeignKey('File', related_name='+', null=True)
     action = models.IntegerField()
