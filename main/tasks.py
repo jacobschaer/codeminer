@@ -20,6 +20,7 @@ def scrape_repository(repository_id):
     }
 
     db_repository = Repository.objects.get(pk=repository_id)
+
     real_repository = repo_type_map[db_repository.repository_type](
         db_repository.origin,
         username = db_repository.username,

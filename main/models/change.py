@@ -6,4 +6,4 @@ from neomodel import (StructuredRel, StringProperty, IntegerProperty,
 # Create your models here.
 
 class Change(StructuredRel):
-    action = IntegerProperty()
+-    action = IntegerProperty()

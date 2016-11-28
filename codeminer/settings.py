@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-
 import os
 from neomodel import config
 from os.path import expanduser, join
@@ -41,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'bootstrap3',
-    'djcelery',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +128,6 @@ STATIC_URL = '/static/'
 # INSTALLATION SPECIFIC
 os.environ.setdefault('CODEMINER_WORKSPACE_PATH', join(expanduser("~"), 'codeminer'))
 os.environ.setdefault('NEO4J_BOLT_URL', 'bolt://neo4j:neo4j@localhost')
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_TASK_SERIALIZER = 'pickle'
