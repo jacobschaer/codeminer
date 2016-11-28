@@ -1,5 +1,4 @@
 from .change import Change
 from .changeset import ChangeSet
-from .file import File
+from .entity import Entity
 from .repository import Repository
-from .history import History

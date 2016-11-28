@@ -1,25 +1,79 @@
 {% extends "main/base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<style type="text/css">
+  .dead_file {
+    color: #ff9999;
+    font-style: italic;
+
+  }
+</style>
+{% endblock %}
+
+{% block js %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+  <script type="text/javascript">
+
+    $(function () {
+      // using jQuery
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $('#jstree_history').jstree({
+        'core' : {
+          'data' : {
+              'type': "POST",
+              'url' : '/repository/1/',
+              'data' : function (node) {
+                  if (node.id == '#') {
+                    return { 'path' : ''}; 
+                  }
+                  else {
+                    var d= { 'path' : node.data.path };
+                    return d;}
+                  },
+              'beforeSend': function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+              }
+            },
+            "plugins" : [
+              "contextmenu", "dnd", "search",
+              "state", "types", "wholerow"
+            ],
+          }
+      }).bind("select_node.jstree", function (e, data) {
+           var href = data.node.a_attr.href;
+           document.location.href = href;
+      });
+    });
+  </script>
+{% endblock %}
+
 {% block content %}
       <div class="panel panel-default" id="repository_table">
         <!-- Default panel contents -->
         <div class="panel-heading">Histories</div>
-
-        <!-- Table -->
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Path</th>
-              <th>State</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for history in histories %}
-            <tr> 
-              <td><a href="/history/{{ history.id }}">{{ history.path }}</a></td>
-              <td>{{ history.state }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <div id="jstree_history"></div>
       </div>
 {% endblock %}
